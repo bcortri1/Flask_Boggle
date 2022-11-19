@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="column">
+        <table id="boggle-container">
+            {% for row in board %}
+            <tr>
+                {% for letter in row %}
+                <td class="boggle-letter">{{letter}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <form>
+            <input id="boggle-guess" type="text" value="" placeholder="Enter Guess">
+            <button id="boggle-submit">Submit</button>
+        </form>
+    </div>
+    <div class="column">
+        <h2>Timer: </h2><span id="boggle-timer">60</span>
+        <br>
+        <h2>Score: </h2><span id="boggle-score">0</span>
+        <h2 id="boggle-result"></h2>
+    </div>
+</div>
+{% endblock %}

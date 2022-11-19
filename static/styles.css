@@ -1,0 +1,40 @@
+table {
+    
+    display: flex;
+    justify-content: space-evenly;
+    width: fit-content;
+    padding: 5px;
+    border: 1px solid;
+}
+
+tr {
+    display: block;
+    width: 100%;
+    margin: auto;
+}
+
+td {
+    text-align: center;
+    width: 5vw;
+    height: 5vw;
+    border: 1px solid;
+}
+
+.column {
+    flex: 50%;
+    padding: 5vw;
+    justify-self: center;
+}
+
+.row {
+    display: flex;
+}
+
+.selected {
+    background: rgba(128, 128, 128, 0.507);
+}
+
+h2 {
+    display: inline-block;
+    padding-right: 10px;
+}
