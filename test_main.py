@@ -13,10 +13,12 @@ class MainTests(TestCase):
         """Before Test"""
         self.client = app.test_client()
         app.config["TESTING"] = True
+        app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
     def test_id_in_session(self):
-        response = self.client.get("/")
-        self.assertIn("player_id", session)
+        with self.client:
+            response = self.client.get("/")
+            self.assertIn("player_id", session)
 
     def test_board_in_session(self):
         with self.client:
@@ -30,5 +32,5 @@ class MainTests(TestCase):
             test_board = session["board"]
             for row in test_board:
                 for letter in row:
-                    self.assertIn(f'<td class="boggle-letter">{letter}</td>', html)
-
+                    self.assertIn(
+                        f'<td class="boggle-letter">{letter}</td>', html)

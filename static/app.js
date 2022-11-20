@@ -52,15 +52,16 @@ function updateStats(str, num = 0) {
 //Changes UI depending on response
 function checkResponse(response) {
     if (response.status === 200) {
-        if (response.data === "ok") {
+        console.log(response)
+        if (response.data["message"] === "ok") {
             updateStats("Good Word!", guess.length);
         }
 
-        else if (response.data === "not-on-board") {
+        else if (response.data["message"] === "not-on-board") {
             updateStats("Not on the board");
         }
 
-        else if (response.data === "already-used") {
+        else if (response.data["message"] === "already-used") {
             updateStats("Word already used");
         }
 
