@@ -1,4 +1,5 @@
 from boggle import Boggle
+from stats import GameStats
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -10,19 +11,13 @@ debug = DebugToolbarExtension(app)
 
 
 boggle_game = Boggle()
-player_highscores = {0: 100}
-player_visits = {0: 0}
+games_stats = GameStats()
 
-#Creates unique ids for each new player
+
+# Creates unique ids for each new player
 def id_create():
-    global player_highscores
-    global player_visits
     if session.get("player_id") == None:
-        session["player_id"] = list(player_highscores.keys())[-1]+1
-        player_id = session["player_id"]
-        player_highscores.update({player_id: 0})
-        player_visits.update({player_id: 0})
-
+        session["player_id"] = games_stats.new_id()
 
 
 @app.route("/")
@@ -53,12 +48,8 @@ def check_word():
 
 @app.route("/score-submit", methods=["POST"])
 def score_submit():
-    global player_highscores
-    global player_visits
-
     req = request.get_json()
     player_id = session["player_id"]
-    if player_highscores.get(player_id) < req["scoreSubmission"]:
-        player_highscores.update({player_id: req["scoreSubmission"]})
-    player_visits[player_id] += 1
+    games_stats.add_score(player_id, req["scoreSubmission"])
+    games_stats.add_visit(player_id)
     return {"message": "Accepted"}, 202
